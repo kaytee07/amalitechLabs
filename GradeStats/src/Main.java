@@ -9,7 +9,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
         String[] gradeInput;
-        int[] gradesOfStudent;
+        int[] score;
         int sumGradesOfStudent = 0;
         int maxGrade = 0;
         int minGrade = Integer.MAX_VALUE;
@@ -19,21 +19,21 @@ public class Main {
         System.out.print("Enter student grades (separated by space): ");
         gradeInput = scanner.nextLine().split(" ");
 
-        gradesOfStudent = new int[gradeInput.length];
+        score = new int[gradeInput.length];
         
         
         for(int i = 0; i < gradeInput.length; i++){
             try{
                  System.out.print("Enter grade of a student: ");
-                gradesOfStudent[i] = Integer.parseInt(gradeInput[i]);
-                sumGradesOfStudent += gradesOfStudent[i];
+                score[i] = Integer.parseInt(gradeInput[i]);
+                sumGradesOfStudent += score[i];
 
-                if(gradesOfStudent[i] > maxGrade){
-                    maxGrade = gradesOfStudent[i];
+                if(score[i] > maxGrade){
+                    maxGrade = score[i];
                 }
 
-                if (gradesOfStudent[i] < minGrade){
-                    minGrade = gradesOfStudent[i];
+                if (score[i] < minGrade){
+                    minGrade = score[i];
                 }
             }      catch (NumberFormatException e) {
                     System.err.println("Error: '" + gradeInput[i] + "' is not a valid integer. Skipping...");
@@ -43,9 +43,9 @@ public class Main {
         }
         System.out.println("");
 
-        averageGrade = (double) sumGradesOfStudent / gradesOfStudent.length;
+        averageGrade = (double) sumGradesOfStudent / score.length;
 
-        System.out.println("Values: " + gradesOfStudent.length);
+        System.out.println("Values: ");
         System.out.println("");
         System.out.println("");
         System.out.println("The maximum grade is: " + maxGrade);
@@ -55,7 +55,7 @@ public class Main {
         System.out.println("");
         System.out.println("");
 
-        for (int grades: gradesOfStudent){
+        for (int grades: score){
             if (grades > 80){
                 stats[4]++;
             } else if (grades >= 61){
@@ -79,7 +79,7 @@ public class Main {
 
       
         for (int i = maxNumOfStudentInRange; i >= 1; i-- ){
-            System.out.printf("%3d >", i);{
+            System.out.printf("%d >", i);{
                 for(int j = 0; j < stats.length; j++){
                     if(i > stats[j]){
                         System.out.print("          ");
