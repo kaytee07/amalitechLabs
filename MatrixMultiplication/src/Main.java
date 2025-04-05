@@ -17,7 +17,7 @@ public class Main {
                 try {
                     System.out.printf("Enter value for %S row %d col %d: ", name, i, j);
                     matrix[i][j] = Integer.parseInt(scanner.nextLine());
-                } catch (Exception e) {
+                } catch (NumberFormatException e) {
                     System.out.println("Input must be an integer");
                 }
             }
@@ -77,7 +77,7 @@ public class Main {
                 System.out.print("Enter number of rows for matrix A: ");
                 rowA = Integer.parseInt(scanner.nextLine());
 
-                System.out.print("Enter number of rows for matrix A: ");
+                System.out.print("Enter number of col for matrix A: ");
                 colsA = Integer.parseInt(scanner.nextLine());
 
                 if (rowA > 0 && colsA > 0){
@@ -102,7 +102,7 @@ public class Main {
 
                 System.out.println("Integer must be positive");
         
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                 System.out.println("Input must be an integer");
             }
         }
