@@ -1,6 +1,7 @@
 public class SavingsAccount extends  Account{
 
-    private double limit = 300;
+    private static final double withdrawalLimit = 300;
+
 
     SavingsAccount(){
         this(0);
@@ -10,20 +11,24 @@ public class SavingsAccount extends  Account{
         super(Balance);
     }
 
-    public void deposit(double amount){
-        double balance = getBalance();
-        super.setBalance(balance + amount);
-    }
+  
 
+    @Override
     public void withdraw(double amount){
-        double Balance = super.getBalance();
-        if (Balance - amount < limit){
-            System.out.println("withdrawal exceeds withdrawal limit");
+        if (amount <= 0) {
+            System.out.println("Withdrawal amount must be positive");
             return;
         }
 
-        super.setBalance(Balance - amount);
-        System.out.println("you have withdrawn an ammount of: " + amount);
+        double Balance = super.getBalance();
+        if (Balance - amount > withdrawalLimit) {
+
+            transactionHistory.addToHistory(amount, "withdraw");
+            super.setBalance(Balance - amount);
+            System.out.println("you have withdrawn an ammount of: " + amount);
+            return;
+        }
+        System.out.println("withdrawal amount exceeds account limit: ");
         return;
     }
 

@@ -12,26 +12,44 @@ public class CurrentAccount extends Account{
         super(Balance);
     }
 
-    public void deposit(double amount){
-        double balance = getBalance();
-        super.setBalance(balance + amount);
-    }
 
-    public void withdraw(double amount){
-        double balance = getBalance();
-        double amtExceedingLimit;
-        if(balance < amount){
-           amtExceedingLimit  = amount - balance;
-           if (overDraftRemaining - amtExceedingLimit < 0){
-               System.out.println("Overdraft limit reached");
-           } else {
-               overDraftRemaining -= amtExceedingLimit;
-            }
-           setBalance(0);
+    @Override
+    public void deposit(double amount){
+        double overdraftDebt = overDraftLimit - overDraftRemaining;
+        if (amount > overdraftDebt){
+            double amountAfterOverdraftDebt = amount - overdraftDebt;
+            overDraftRemaining += overdraftDebt;
+            transactionHistory.addToHistory(amount, "withdraw");
+            super.deposit(amountAfterOverdraftDebt);
         } else {
-            super.setBalance(getBalance() - amount);
+            overDraftRemaining += amount;
+
         }
     }
 
+
+    @Override
+    public void withdraw(double amount){
+        if (amount <= 0) {
+            System.out.println("Withdrawal amount must be positive");
+            return;
+        }
+        double balance = getBalance();
+        if (balance >= amount){
+            setBalance(balance - amount);
+            return;
+        } else {
+            double overdraftNeeded = amount - balance;
+            if (overdraftNeeded > overDraftRemaining){
+                System.out.println("Overdraft limit reached");
+                return;
+            }
+            transactionHistory.addToHistory(amount, "withdraw");
+            setBalance(0);
+            overDraftRemaining -= overdraftNeeded;
+            return;
+        }
+
+    }
 
 }
