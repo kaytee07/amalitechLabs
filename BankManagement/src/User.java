@@ -1,24 +1,13 @@
 public class User {
-    private Account account;
-    private double identifier;
+    private String username;
 
 
-
-    public void setAccount(Account account) {
-        this.account = account;
+    User(String name) {
+        this.username = name;
     }
 
-    public void deposit(double amount){
-        account.deposit(amount);
-    }
-
-    public void withdraw(double amount) {
-        account.withdraw(amount);
-    }
-
-  
-    public void checkBalance(){
-        account.checkBalance();
+    void getUsername(){
+        System.out.println(username);
     }
 
 

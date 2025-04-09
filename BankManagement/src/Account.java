@@ -1,13 +1,22 @@
+import java.util.UUID;
+
 public abstract  class Account implements BankOperations{
     private double Balance;
-
-    private double identifier;
+    private User user;
+    private String identifier;
     protected Transactions transactionHistory;
 
-    Account(double amount){
+    Account(double amount, User user){
+        this.user = user;
         Balance = amount;
-        identifier =  Math.random() * 100;
+        identifier =  UUID.randomUUID().toString().replace("-", "").substring(0, 14);
         transactionHistory = new Transactions();
+        getAccountNumber();
+    }
+
+
+    void getAccountNumber(){
+        System.out.println("Your account number is: "+ identifier);
     }
 
     public double getBalance(){

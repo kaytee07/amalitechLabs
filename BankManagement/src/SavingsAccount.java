@@ -3,12 +3,8 @@ public class SavingsAccount extends  Account{
     private static final double withdrawalLimit = 300;
 
 
-    SavingsAccount(){
-        this(300);
-    }
-
-    SavingsAccount(double Balance){
-        super(Balance);
+    SavingsAccount(double Balance, User user){
+        super(Balance, user);
     }
 
 
@@ -30,6 +26,5 @@ public class SavingsAccount extends  Account{
         System.out.println("withdrawal amount exceeds account limit: ");
         return;
     }
-
 
 }

@@ -20,7 +20,7 @@
         System.out.println("========Transaction History========");
         System.out.println();
         while (current != null && lastNHistory > 0){
-            System.out.printf("%s: %.2f%n",current.transactionType, current.value);
+            System.out.printf("amount to %s: %.2f%n Transaction Date: %s%n",current.transactionType, current.value, current.transactionDate);
             current = current.next;
             lastNHistory--;
         }

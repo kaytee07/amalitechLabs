@@ -4,12 +4,8 @@ public class CurrentAccount extends Account{
     private double overDraftRemaining = 300.00;
 
 
-    CurrentAccount(){
-        this(0);
-    }
-
-    CurrentAccount(double Balance){
-        super(Balance);
+    CurrentAccount(double Balance, User user){
+        super(Balance, user);
     }
 
 

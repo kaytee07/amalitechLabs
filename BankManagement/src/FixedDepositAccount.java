@@ -9,13 +9,14 @@ public class FixedDepositAccount extends  Account{
     *
      */
 
-    private int Duration;
-    private int timePassed = 0;
+    private int Duration = 24;
+    private int timePassed = 25;
     final private double interestRate = 0.05;
     final private double penaltyRate = 0.02;
 
-    FixedDepositAccount(double Deposit, int Duration){
-        super(Deposit);
+    FixedDepositAccount(double Deposit, User user){
+        super(Deposit, user);
+
          if (Duration <= 0) {
             throw new IllegalArgumentException("Duration must be positive");
          }
