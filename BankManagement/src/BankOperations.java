@@ -4,6 +4,7 @@ public interface BankOperations {
 
     void withdraw(double amount);
 
+
     void checkBalance();
 
 }

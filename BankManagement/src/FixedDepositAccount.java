@@ -1,7 +1,15 @@
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+
 public class FixedDepositAccount extends  Account{
+    /*
+    *
+    *
+    *
+    *
+     */
 
-
-    private int Duration; 
+    private int Duration;
     private int timePassed = 0;
     final private double interestRate = 0.05;
     final private double penaltyRate = 0.02;
@@ -11,12 +19,10 @@ public class FixedDepositAccount extends  Account{
          if (Duration <= 0) {
             throw new IllegalArgumentException("Duration must be positive");
          }
+
         this.Duration = Duration / 12;
     }
 
-    void increaseTimePassed(){
-        timePassed++;
-    }
 
     @Override
     public void withdraw(double amount){

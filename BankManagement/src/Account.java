@@ -32,6 +32,8 @@ public abstract  class Account implements BankOperations{
 
     abstract public void withdraw(double amount);
 
+
+
     public void getLastNHistory(int NumOfTransactions) {
         System.out.println("Traansaction history account Number " + identifier);
         transactionHistory.printHstory(NumOfTransactions);

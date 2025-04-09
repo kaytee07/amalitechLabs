@@ -31,8 +31,7 @@ public class CurrentAccount extends Account{
     @Override
     public void withdraw(double amount){
         if (amount <= 0) {
-            System.out.println("Withdrawal amount must be positive");
-            return;
+            throw new IllegalArgumentException("withdrawal must be positive");
         }
         double balance = getBalance();
         if (balance >= amount){

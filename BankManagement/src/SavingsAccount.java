@@ -4,14 +4,13 @@ public class SavingsAccount extends  Account{
 
 
     SavingsAccount(){
-        this(0);
+        this(300);
     }
 
     SavingsAccount(double Balance){
         super(Balance);
     }
 
-  
 
     @Override
     public void withdraw(double amount){
