@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.fxbankmanagement.WithdrawModalController">
+    <Label text="Enter Amount to Withdraw:" layoutX="10" layoutY="10"/>
+    <TextField fx:id="amountField" layoutX="10" layoutY="40" promptText="Amount" />
+    <Button text="Withdraw" layoutX="10" layoutY="70" onAction="#handleWithdraw"/>
+    <Button text="Cancel" layoutX="100" layoutY="70" onAction="#handleCancel"/>
+</AnchorPane>
+
