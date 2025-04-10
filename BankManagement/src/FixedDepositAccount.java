@@ -9,19 +9,13 @@ public class FixedDepositAccount extends  Account{
     *
      */
 
-    private int Duration = 24;
+    private int Duration = 24 / 12;;
     private int timePassed = 25;
     final private double interestRate = 0.05;
     final private double penaltyRate = 0.02;
 
     FixedDepositAccount(double Deposit, User user){
-        super(Deposit, user);
-
-         if (Duration <= 0) {
-            throw new IllegalArgumentException("Duration must be positive");
-         }
-
-        this.Duration = Duration / 12;
+        super(user, Deposit);
     }
 
 

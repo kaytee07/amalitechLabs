@@ -6,7 +6,7 @@ public abstract  class Account implements BankOperations{
     private String identifier;
     protected Transactions transactionHistory;
 
-    Account(double amount, User user){
+    Account(User user, double amount){
         this.user = user;
         Balance = amount;
         identifier =  UUID.randomUUID().toString().replace("-", "").substring(0, 14);

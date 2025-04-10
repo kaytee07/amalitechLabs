@@ -3,9 +3,12 @@ public class CurrentAccount extends Account{
     final private double overDraftLimit = 300.00;
     private double overDraftRemaining = 300.00;
 
+    CurrentAccount(User user){
 
-    CurrentAccount(double Balance, User user){
-        super(Balance, user);
+        this(user, 0);
+    }
+    CurrentAccount(User user, double Balance){
+        super(user, Balance);
     }
 
 

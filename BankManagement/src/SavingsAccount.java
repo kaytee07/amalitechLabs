@@ -2,8 +2,11 @@ public class SavingsAccount extends  Account{
 
     private static final double withdrawalLimit = 300;
 
+    SavingsAccount(User user){
+        this(user, 0);
+    }
 
-    SavingsAccount(double Balance, User user){
+    SavingsAccount(User user, double Balance){
         super(Balance, user);
     }
 
