@@ -58,7 +58,7 @@ public class Controller {
                         account = new CurrentAccount(user);
                     }
                 }
-                case "Fixed Deposit" -> {
+                case "Fixed Deposit Account" -> {
                     if (receivedCash != null && !receivedCash.trim().isEmpty()){
                         account = new FixedDepositAccount(user,Double.parseDouble(receivedCash));
                     } else {

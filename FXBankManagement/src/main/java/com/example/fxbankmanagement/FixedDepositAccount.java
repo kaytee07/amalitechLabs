@@ -12,13 +12,13 @@ public class FixedDepositAccount extends  Account{
     }
 
     @Override
-    public void deposit (double amount) {
+    public void deposit (double amount) throws Exception {
         /*
         * deposit: to deposit amount to balance but first check if there have been an initial deposit
         * amount: amount the user wants
         * */
         if (super.getBalance() > 0) {
-            System.out.println("Wait for deposit to mature before making another deposit");
+            throw new Exception("Wait for deposit to mature before making another deposit");
         } else {
             super.deposit(amount);
         }
@@ -31,15 +31,11 @@ public class FixedDepositAccount extends  Account{
        double interest;  
        double payout;
 
-       if (balance == 0){
-           throw new Exception("No funds available in this account");
-       }
 
         if (timePassed >= Duration){
             interest = balance * interestRate * Duration;
             payout = balance + interest;
             transactionHistory.addToHistory(payout, "withdraw");
-            setBalance(0);
             System.out.println("your fixed deposit accrued: " + payout);
             return;
             
@@ -47,7 +43,6 @@ public class FixedDepositAccount extends  Account{
             interest = balance * penaltyRate * timePassed;
             payout = balance + interest;
             transactionHistory.addToHistory(payout, "withdraw");
-            setBalance(0);
             System.out.println("your fixed deposit accrued: " + payout);
             return;
         }

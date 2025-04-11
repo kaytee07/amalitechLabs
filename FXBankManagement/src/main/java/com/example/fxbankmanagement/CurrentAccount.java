@@ -15,7 +15,7 @@ public class CurrentAccount extends Account{
 
 
     @Override
-    public void deposit(double amount){
+    public void deposit(double amount) throws Exception{
         double overdraftDebt = overDraftLimit - overDraftRemaining;
         if (amount > overdraftDebt){
             double amountAfterOverdraftDebt = amount - overdraftDebt;

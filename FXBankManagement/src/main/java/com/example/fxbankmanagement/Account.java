@@ -35,7 +35,7 @@ public abstract  class Account implements BankOperations{
         Balance = amount;
     }
 
-    public void deposit(double amount) {
+    public void deposit(double amount) throws Exception {
         /*
         * deposit: add amount to the balance
         * amount: that is the amount to add to the balance
