@@ -20,10 +20,11 @@ public class CurrentAccount extends Account{
         if (amount > overdraftDebt){
             double amountAfterOverdraftDebt = amount - overdraftDebt;
             overDraftRemaining += overdraftDebt;
-            transactionHistory.addToHistory(amount, "withdraw");
+            transactionHistory.addToHistory(new Transaction(amount, "deposit"));
             super.deposit(amountAfterOverdraftDebt);
         } else {
             overDraftRemaining += amount;
+            transactionHistory.addToHistory(new Transaction(amount, "deposit"));
 
         }
     }
@@ -36,6 +37,7 @@ public class CurrentAccount extends Account{
         }
         double balance = getBalance();
         if (balance >= amount){
+            transactionHistory.addToHistory(new Transaction(amount, "withdraw"));
             setBalance(balance - amount);
             return;
         } else {
@@ -43,7 +45,7 @@ public class CurrentAccount extends Account{
             if (overdraftNeeded > overDraftRemaining){
                 throw new Exception("Overdraft limit reached");
             }
-            transactionHistory.addToHistory(amount, "withdraw");
+            transactionHistory.addToHistory(new Transaction(amount, "withdraw"));
             setBalance(0);
             overDraftRemaining -= overdraftNeeded;
             return;

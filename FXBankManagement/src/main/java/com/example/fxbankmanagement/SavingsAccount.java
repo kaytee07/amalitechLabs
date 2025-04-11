@@ -30,7 +30,7 @@ public class SavingsAccount extends  Account{
         double Balance = super.getBalance();
         if (Balance - amount > withdrawalLimit) {
 
-            transactionHistory.addToHistory(amount, "withdraw");
+            transactionHistory.addToHistory(new Transaction(amount, "withdraw"));
             super.setBalance(Balance - amount);
             System.out.println("you have withdrawn an ammount of: " + amount);
             return;

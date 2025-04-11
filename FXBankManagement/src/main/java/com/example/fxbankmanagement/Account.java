@@ -2,6 +2,8 @@ package com.example.fxbankmanagement;
 
 import com.example.fxbankmanagement.User;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
@@ -44,7 +46,6 @@ public abstract  class Account implements BankOperations{
         if (amount <= 0) {
             throw new IllegalArgumentException("Deposit amount must be positive");
         }
-        transactionHistory.addToHistory(amount, "deposit");
         Balance += amount;
     }
 
@@ -57,9 +58,8 @@ public abstract  class Account implements BankOperations{
 
     abstract public void withdraw(double amount) throws  Exception;
 
-    public List getLastNHistory(int NumOfTransactions) {
-        System.out.println("Traansaction history account Number " + identifier);
-        return transactionHistory.printHistory(NumOfTransactions);
+    public Transaction[] lastNHTransaction(int NumOfTransactions) throws Exception {
+        return transactionHistory.getNHistory(NumOfTransactions);
     }
 
     public User getUser(){
@@ -72,6 +72,10 @@ public abstract  class Account implements BankOperations{
 
     public String toString(){
         return user.getUsername() + "your account Number is" + getAccountNumber();
+    }
+
+    public void addToHistory(Transaction transaction){
+        transactionHistory.addToHistory(transaction);
     }
 
 }

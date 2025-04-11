@@ -12,14 +12,16 @@
       <Label fx:id="name" layoutX="44.0" layoutY="26.0" prefHeight="39.0" prefWidth="152.0" text="Welcome Winful Taylor" />
       <Label fx:id="deposit" layoutX="44.0" layoutY="53.0" prefHeight="25.0" prefWidth="130.0" text="Balance: $2000" />
       <Button fx:id="handleWithdraw" layoutX="40.0" layoutY="87.0" mnemonicParsing="false" onAction="#handleWithdraw" prefHeight="25.0" prefWidth="80.0" text="Withdraw" />
-      <Button fx:id="handleDeposit" layoutX="317.0" layoutY="87.0" mnemonicParsing="false" onAction="#handleDeposit" prefHeight="25.0" prefWidth="80.0" text="Deposit" />
-      <Label layoutX="44.0" layoutY="128.0" prefHeight="17.0" prefWidth="168.0" text="Number of transactions to view" />
-      <TextField layoutX="229.0" layoutY="124.0" prefHeight="25.0" prefWidth="40.0" text="5" />
+      <Button fx:id="handleDeposit" layoutX="313.0" layoutY="87.0" mnemonicParsing="false" onAction="#handleDeposit" prefHeight="25.0" prefWidth="80.0" text="Deposit" />
+      <Button fx:id="transactionButton" layoutX="35.0" layoutY="124.0" prefHeight="25.0" prefWidth="130.0" text="last (n) history" onAction="#handleGetNHistory" />
+      <TextField fx:id="transactionsField" layoutX="179.0" layoutY="124.0" onAction="#handleGetNHistory" prefHeight="25.0" prefWidth="40.0" text="5" />
 
        <TextField fx:id="withDrawValue" layoutX="149.0" layoutY="87.0" prefHeight="25.0" prefWidth="80.0" />
        <TableView fx:id="transactionTable" layoutX="44.0" layoutY="174.0" prefHeight="200.0" prefWidth="514.0">
            <columns>
-               <TableColumn fx:id="column1" text="Column 1" prefWidth="100"/>
+               <TableColumn fx:id="valueColumn" prefWidth="100" text="Value" />
+               <TableColumn fx:id="transactionTypeColumn" prefWidth="150" text="Transaction" />
+               <TableColumn fx:id="dateColumn" prefWidth="150" text="Date" />
            </columns>
        </TableView>
       <TextField fx:id="depositValue" layoutX="423.0" layoutY="87.0" prefHeight="25.0" prefWidth="90.0" />

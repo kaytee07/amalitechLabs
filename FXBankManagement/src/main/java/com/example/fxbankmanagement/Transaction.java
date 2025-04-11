@@ -14,4 +14,17 @@ public class Transaction {
         this.transactionType = transactionType;
         transactionDate = LocalDate.now().toString();
     }
+
+    public double getValue(){
+        return  value;
+    }
+
+    public String getTransactionType(){
+        return transactionType;
+    }
+
+    public String getDate(){
+        System.out.println(transactionDate);
+        return transactionDate;
+    }
 }

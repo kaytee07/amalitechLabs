@@ -20,32 +20,36 @@ public class FixedDepositAccount extends  Account{
         if (super.getBalance() > 0) {
             throw new Exception("Wait for deposit to mature before making another deposit");
         } else {
+            transactionHistory.addToHistory(new Transaction(amount, "deposit"));
             super.deposit(amount);
         }
     }
 
-
     @Override
     public void withdraw(double amount) throws Exception{
-       double balance = getBalance();
-       double interest;  
-       double payout;
-
-
-        if (timePassed >= Duration){
-            interest = balance * interestRate * Duration;
-            payout = balance + interest;
-            transactionHistory.addToHistory(payout, "withdraw");
-            System.out.println("your fixed deposit accrued: " + payout);
-            return;
-            
+        if (getBalance() >= amount){
+            setBalance(getBalance() - amount);
+            transactionHistory.addToHistory(new Transaction(amount, "withdraw"));
         } else {
-            interest = balance * penaltyRate * timePassed;
-            payout = balance + interest;
-            transactionHistory.addToHistory(payout, "withdraw");
-            System.out.println("your fixed deposit accrued: " + payout);
-            return;
+            throw new Exception("insufficient funds");
         }
+
+    }
+
+    public void addInterest() throws Exception {
+        double balance = getBalance() + calculateInterest(timePassed);
+        setBalance(balance);
+    }
+
+    public double calculateInterest(int timeElapsed) throws Exception{
+        if (timeElapsed < 1) throw  new Exception("you just made an initial deposit");
+        double rate;
+        if (timeElapsed >= Duration){
+            rate = interestRate;
+        } else {
+            rate = penaltyRate;
+        }
+        return getBalance() * rate * Duration;
     }
 
 }

@@ -1,50 +1,41 @@
 package com.example.fxbankmanagement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Transactions {
     private Transaction head;
+    private int listLength;
 
     Transactions() {
         this.head = null;
     }
 
-    public void addToHistory(double amount, String type) {
-        Transaction transaction = new Transaction(amount, type);
+    public void addToHistory(Transaction transaction) {
         if (head == null) {
             head = transaction;
         } else {
             transaction.next = head;
             head = transaction;
+            listLength++;
         }
     }
 
-    public List printHistory(int lastNHistory) {
+    public Transaction[] getNHistory(int N)throws Exception{
+        if(head == null) throw new Exception("You have made no transactions");
+        int index = 0;
+        int actualSize = Math.min(N, listLength);
+        Transaction[] transaction = new Transaction[actualSize];
         Transaction current = this.head;
-        int transactionCount = 0;
-
-        while (current != null) {
-            transactionCount++;
+        while(current != null && index < actualSize){
+            transaction[index] = current;
             current = current.next;
+            index++;
         }
 
-        if (transactionCount < lastNHistory) {
-            lastNHistory = transactionCount;
-        }
-
-        current = this.head;
-        int count = 0;
-
-
-        List<Transaction> transactionsToDisplay = new ArrayList<Transaction>();
-
-        while (current != null && count < lastNHistory) {
-            transactionsToDisplay.add(current);
-            current = current.next;
-            count++;
-        }
-
-        return transactionsToDisplay;
+        return  transaction;
     }
+
+
 }
 

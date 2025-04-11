@@ -1,8 +1,11 @@
 package com.example.fxbankmanagement;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
@@ -18,7 +21,13 @@ public class DashboardController {
     public  TextField withDrawValue;
 
     @FXML
-    private TableView transactionTable;
+    private TextField transactionsField;
+
+    @FXML
+    private Button transactionButton;
+
+    @FXML
+    private TableView<Transaction> transactionTable;
 
     @FXML
     private Label errorLabel;
@@ -36,13 +45,21 @@ public class DashboardController {
 
 
     @FXML
-    private TableColumn<Transaction, String> dateColumn; // Column for Date
+    private TableColumn<Transaction, Double> valueColumn;
+
 
     @FXML
-    private TableColumn<Transaction, String> typeColumn; // Column for Type
+    private TableColumn<Transaction, String> transactionTypeColumn;
 
     @FXML
-    private TableColumn<Transaction, Double> amountColumn; // Column for Amount
+    private TableColumn<Transaction, String> dateColumn;
+
+    @FXML
+    public void initialize() {
+        valueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
+        transactionTypeColumn.setCellValueFactory(new PropertyValueFactory<>("transactionType"));
+        dateColumn.setCellValueFactory(new PropertyValueFactory<>("Date"));
+    }
 
 
     String username;
@@ -89,7 +106,7 @@ public class DashboardController {
             if (withdrawAmount <= 0) {
                 throw  new Exception ("amount to withdraw must be greater than 0");
             }
-            transactionTable.getItems().setAll(account.getLastNHistory(2));
+//            transactionTable.getItems().setAll(account.transactionHistory.getNHistory(2));
             account.withdraw(withdrawAmount);
             balance = account.getBalance();
             deposit.setText("Balance: $" + balance.toString());
@@ -121,17 +138,33 @@ public class DashboardController {
 
             balance = account.getBalance();
 
-            transactionTable.getItems().setAll(account.getLastNHistory(2));
+//            transactionTable.getItems().setAll(account.transactionHistory.getNHistory(2));
 
             deposit.setText("Balance: $" + balance);
 
-            depositValue.setText("");  // Assuming depositValue is where the user inputs the deposit amount
+            depositValue.setText("");
 
         } catch (Exception e) {
             // Handle any errors and display the message on the error label
             errorLabel.setText(e.getMessage());
         }
 
+    }
+
+    @FXML
+    public void handleGetNHistory (ActionEvent event) throws Exception {
+        try {
+            int N = Integer.parseInt(transactionsField.getText());
+            Transaction[] history = account.transactionHistory.getNHistory(N);
+
+            ObservableList<Transaction> transactions = FXCollections.observableArrayList(history);
+            transactionTable.setItems(transactions);
+
+        } catch (NumberFormatException e) {
+            errorLabel.setText(e.getMessage());
+        } catch (Exception e){
+            errorLabel.setText(e.getMessage());
+        }
     }
 
     private void showAlert(AlertType alertType, String title, String message) {
