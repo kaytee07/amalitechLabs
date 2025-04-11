@@ -14,8 +14,8 @@ public class FixedDepositAccount extends  Account{
     @Override
     public void deposit (double amount) {
         /*
-        * deposit: add amount to balance but first check if there have been an initial deposit
-        * 
+        * deposit: to deposit amount to balance but first check if there have been an initial deposit
+        * amount: amount the user wants
         * */
         if (super.getBalance() > 0) {
             System.out.println("Wait for deposit to mature before making another deposit");
@@ -26,13 +26,13 @@ public class FixedDepositAccount extends  Account{
 
 
     @Override
-    public void withdraw(double amount){
+    public void withdraw(double amount) throws Exception{
        double balance = getBalance();
        double interest;  
        double payout;
 
        if (balance == 0){
-            System.out.println("No funds available in this account");
+           throw new Exception("No funds available in this account");
        }
 
         if (timePassed >= Duration){

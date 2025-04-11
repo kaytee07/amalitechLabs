@@ -16,7 +16,7 @@ public class SavingsAccount extends  Account{
 
 
     @Override
-    public void withdraw(double amount){
+    public void withdraw(double amount) throws Exception{
         /*
         * Withdraw: withdraws amount from the account if balance is greater than limit
         * amount: amount you want to withdraw
@@ -24,8 +24,7 @@ public class SavingsAccount extends  Account{
         * return nothing
         */
         if (amount <= 0) {
-            System.out.println("Withdrawal amount must be positive");
-            return;
+            throw  new Exception("Withdrawal amount must be positive");
         }
 
         double Balance = super.getBalance();
@@ -36,8 +35,8 @@ public class SavingsAccount extends  Account{
             System.out.println("you have withdrawn an ammount of: " + amount);
             return;
         }
-        System.out.println("withdrawal amount exceeds account limit: ");
-        return;
+        throw new Exception("withdrawal amount exceeds account limit: ");
+
     }
 
 }

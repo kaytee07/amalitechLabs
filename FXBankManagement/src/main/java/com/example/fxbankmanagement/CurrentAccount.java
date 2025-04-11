@@ -30,7 +30,7 @@ public class CurrentAccount extends Account{
 
 
     @Override
-    public void withdraw(double amount){
+    public void withdraw(double amount) throws Exception{
         if (amount <= 0) {
             throw new IllegalArgumentException("withdrawal must be positive");
         }
@@ -41,8 +41,7 @@ public class CurrentAccount extends Account{
         } else {
             double overdraftNeeded = amount - balance;
             if (overdraftNeeded > overDraftRemaining){
-                System.out.println("Overdraft limit reached");
-                return;
+                throw new Exception("Overdraft limit reached");
             }
             transactionHistory.addToHistory(amount, "withdraw");
             setBalance(0);

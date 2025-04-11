@@ -32,5 +32,6 @@
             </FXCollections>
          </items>
       </ComboBox>
+      <Label fx:id="error1Label" layoutX="134.0" layoutY="245.0" prefHeight="17.0" prefWidth="325.0" />
    </children>
 </AnchorPane>

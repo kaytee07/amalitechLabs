@@ -16,6 +16,12 @@ import javafx.event.ActionEvent;
 public class DashboardController {
     public TextField depositValue;
     public  TextField withDrawValue;
+
+    @FXML
+    private TableView transactionTable;
+
+    @FXML
+    private Label errorLabel;
     @FXML
     private Label name;
 
@@ -28,8 +34,6 @@ public class DashboardController {
     @FXML
     private Button handleDeposit;
 
-    @FXML
-    private TableView<Transaction> transactionTable; // The TableView to display transactions
 
     @FXML
     private TableColumn<Transaction, String> dateColumn; // Column for Date
@@ -69,54 +73,65 @@ public class DashboardController {
 
     @FXML
     public void handleWithdraw(ActionEvent event) throws Exception {
-        /**/
-        String withdrawText = withDrawValue.getText();
 
-        if (withdrawText.isEmpty()) {
-          showAlert(AlertType.WARNING, "Input Error", "Please enter a withdrawal amount.");
-            return;
-        }
+        /**/
+
 
         try {
-            double withdrawAmount = Double.parseDouble(withdrawText);
-            if (withdrawAmount <= 0) {
-                showAlert(AlertType.WARNING, "Input Error", "Withdrawal amount must be positive.");
-                return;
+            String withdrawText = withDrawValue.getText();
+
+            if (withdrawText.isEmpty()) {
+                throw new Exception("Please enter a withdrawal amount.");
             }
+
+            double withdrawAmount = Double.parseDouble(withdrawText);
+
+            if (withdrawAmount <= 0) {
+                throw  new Exception ("amount to withdraw must be greater than 0");
+            }
+            transactionTable.getItems().setAll(account.getLastNHistory(2));
             account.withdraw(withdrawAmount);
             balance = account.getBalance();
             deposit.setText("Balance: $" + balance.toString());
             withDrawValue.setText("");
             System.out.println(balance);
-        } catch (NumberFormatException e){
-            showAlert(AlertType.ERROR, "Invalid Amount", "Please enter a valid numeric amount.");
+        } catch (Exception e){
+            errorLabel.setText(e.getMessage());
         }
 
     }
 
     @FXML
     public void handleDeposit(ActionEvent event) throws Exception {
-        String depositText = depositValue.getText();
-
-        if (depositText.isEmpty()) {
-            showAlert(AlertType.WARNING, "Input Error", "Please enter a withdrawal amount.");
-            return;
-        }
 
         try {
-            double depositAmount = Double.parseDouble(depositText);
-            if (depositAmount <= 0) {
-                showAlert(AlertType.WARNING, "Input Error", "Withdrawal amount must be positive.");
-                return;
+            String depositText = depositValue.getText();  // Assuming depositValue is the correct input field for deposit
+
+            if (depositText.isEmpty()) {
+                throw new Exception("Please enter a deposit amount.");
             }
+
+            double depositAmount = Double.parseDouble(depositText);
+
+            if (depositAmount <= 0) {
+                throw new Exception("Deposit amount must be positive.");
+            }
+
             account.deposit(depositAmount);
+
             balance = account.getBalance();
-            deposit.setText("Balance: $" + balance.toString());
-            withDrawValue.setText("");
-            System.out.println(balance);
-        } catch (NumberFormatException e){
-            showAlert(AlertType.ERROR, "Invalid Amount", "Please enter a valid numeric amount.");
+
+            transactionTable.getItems().setAll(account.getLastNHistory(2));
+
+            deposit.setText("Balance: $" + balance);
+
+            depositValue.setText("");  // Assuming depositValue is where the user inputs the deposit amount
+
+        } catch (Exception e) {
+            // Handle any errors and display the message on the error label
+            errorLabel.setText(e.getMessage());
         }
+
     }
 
     private void showAlert(AlertType alertType, String title, String message) {

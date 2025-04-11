@@ -55,9 +55,7 @@ public abstract  class Account implements BankOperations{
         return identifier;
     }
 
-    abstract public void withdraw(double amount);
-
-
+    abstract public void withdraw(double amount) throws  Exception;
 
     public List getLastNHistory(int NumOfTransactions) {
         System.out.println("Traansaction history account Number " + identifier);
@@ -68,7 +66,7 @@ public abstract  class Account implements BankOperations{
         return  user;
     }
 
-    public double checkBalance(){
+    public double checkBalance()  {
         return Balance;
     }
 
