@@ -71,40 +71,62 @@ public class EmployeeDatabase <T> {
     }
 
 
-    public ArrayList<Employee<T>> getFilteredList(String filter, String query) throws Exception{
+    public ArrayList<Employee<T>> searchByName(String filter, String query) throws Exception{
         ArrayList<Employee<T>> allEmployees = getAllEmployees();
         ArrayList<Employee<T>> filteredEmployees;
-        switch(filter){
-            case "department" -> {
-                filteredEmployees = allEmployees.stream().filter(employee -> Objects.equals(employee.getDepartment(), filter)).collect(Collectors.toCollection(ArrayList::new));
-                return filteredEmployees;
-            }
-            case "names" -> {
-                filteredEmployees = allEmployees.stream().filter(employee -> employee.getName().contains(query)).collect(Collectors.toCollection(ArrayList::new));
-                return filteredEmployees;
-            }
-            default -> throw new Exception("Invalid filter");
-        }
+        filteredEmployees = allEmployees.stream().filter(employee -> employee.getName().contains(query)).collect(Collectors.toCollection(ArrayList::new));
+        if(filteredEmployees.isEmpty()) throw new Exception("User not found");
+        return filteredEmployees;
+
     }
 
-    public ArrayList<Employee<T>> getFilteredList(String filter, Double query) throws Exception{
+    public ArrayList<Employee<T>> filterByDepartment(String department) throws Exception{
         ArrayList<Employee<T>> allEmployees = getAllEmployees();
         ArrayList<Employee<T>> filteredEmployees;
-        switch(filter){
-            case "performancerating" -> {
-                filteredEmployees = allEmployees.stream().filter(employee -> employee.getPerformanceRating() >= 4.0).collect(Collectors.toCollection(ArrayList::new));
-                return filteredEmployees;
-            }
-            case "salary" -> {
-                filteredEmployees = allEmployees.stream().filter(employee -> employee.getSalary() >= 50000 && employee.getSalary() <= 100000).collect(Collectors.toCollection(ArrayList::new));
-                return filteredEmployees;
-            }
-            default -> throw new Exception("Invalid filter");
+        filteredEmployees = allEmployees.stream()
+                .filter(employee -> Objects.equals(employee.getDepartment(), department))
+                .collect(Collectors.toCollection(ArrayList::new));
+        if(filteredEmployees.isEmpty()) throw new Exception("No employee exist in this department");
+        return filteredEmployees;
+    }
+
+    public ArrayList<Employee<T>> filterBySalaryRange(double minRange, double maxRange) throws Exception{
+        ArrayList<Employee<T>> allEmployees = getAllEmployees();
+        ArrayList<Employee<T>> filteredEmployees;
+        filteredEmployees = allEmployees.stream()
+                .filter(employee -> employee.getSalary() >= minRange && employee.getSalary() <= maxRange)
+                .collect(Collectors.toCollection(ArrayList::new));
+        if(filteredEmployees.isEmpty()) throw new Exception("No employee falls within this range");
+        return filteredEmployees;
+    }
+
+    public ArrayList<Employee<T>> filterByPerformance(boolean greaterThan, double performance) throws Exception{
+        ArrayList<Employee<T>> allEmployees = getAllEmployees();
+        ArrayList<Employee<T>> filteredEmployees;
+        if(greaterThan){
+            filteredEmployees = getAllEmployees().stream()
+                    .filter(employee -> employee.getPerformanceRating() > performance)
+                    .collect(Collectors.toCollection(ArrayList::new));
+        } else {
+            filteredEmployees = getAllEmployees().stream()
+                    .filter(employee -> employee.getPerformanceRating() < performance)
+                    .collect(Collectors.toCollection(ArrayList::new));
         }
+        if(filteredEmployees.isEmpty()){
+            throw new Exception("no user falls within the range specified");
+        }
+        return filteredEmployees;
+    }
+
+    public double AverageSalaryByDepartment(String department){
+        return employees.values().stream()
+                .filter(emp -> Objects.equals(emp.getDepartment(), department))
+                .mapToDouble(Employee::getSalary)
+                .average()
+                .orElse(0.0);
     }
 
     public void salaryRaise(Double percentageInDecimal){
-        ArrayList<Employee<T>> allEmployees = getAllEmployees();
         employees.values().forEach(employee -> {
             if (employee.getPerformanceRating() >= 4.5) {
                 double newSalary = employee.getSalary() + employee.getSalary() * percentageInDecimal;
@@ -115,8 +137,44 @@ public class EmployeeDatabase <T> {
 
     public ArrayList<Employee<T>> getTopNHighestPaid(int N){
         ArrayList<Employee<T>> allEmployees = getAllEmployees();
-        ArrayList<Employee<T>> topNEmployees = allEmployees.stream().sorted(bySalary).limit(N).collect(Collectors.toCollection(ArrayList::new));
+        ArrayList<Employee<T>> topNEmployees = allEmployees.stream()
+                .sorted(bySalary).limit(N)
+                .collect(Collectors.toCollection(ArrayList::new));
         return topNEmployees;
+    }
+
+    public static void printHeader() {
+        System.out.printf("%-15s %-20s %-10s %-10s %-10s %-20s%n",
+                "Name", "Department", "Salary", "Performance", "Years Of Experience", "Employee ID");
+        System.out.println("---------------------------------------------------------------------");
+    }
+
+    public void displayEmployeesWithForLoop() {
+        ArrayList<Employee<T>> allEmployees = getAllEmployees();
+        printHeader();
+        for (Employee<T> employee: allEmployees){
+            System.out.printf("%-15s %-20s %-10s %-10s %-10s %-20s%n",
+                    employee.getName(),
+                    employee.getDepartment(),
+                    employee.getSalary(),
+                    employee.getPerformanceRating(),
+                    employee.getYearsOfExperience(),
+                    employee.getEmployeeId().toString());
+        }
+    }
+
+    public void displayEmployeesWithStream() {
+        ArrayList<Employee<T>> allEmployees = getAllEmployees();
+        printHeader();
+        allEmployees.stream()
+                .map(employee -> String.format("%-15s %-20s %-10s %-10s %-10s %-20s%n",
+                        employee.getName(),
+                        employee.getDepartment(),
+                        employee.getSalary(),
+                        employee.getPerformanceRating(),
+                        employee.getYearsOfExperience(),
+                        employee.getEmployeeId().toString()))
+                .forEach(System.out::println);
     }
 
     Comparator<Employee<T>> bySalary = new Comparator<Employee<T>>() {
