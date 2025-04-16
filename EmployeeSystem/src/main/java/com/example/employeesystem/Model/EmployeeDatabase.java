@@ -16,7 +16,12 @@ public class EmployeeDatabase <T> {
     }
 
     public void removeEmployee(T employeeId) throws UserNotFoundException {
-        if(!employees.containsKey(employeeId)) throw new  UserNotFoundException("eRROR REMOVING EMPLOYEE");
+//        if (!employees.containsKey(employeeId)) {
+//            throw new UserNotFoundException("Error removing employee: Employee not found");
+//        }
+
+        this.getAllEmployees().forEach(employee -> System.out.println(employee.getEmployeeId() == employeeId));
+
         employees.remove(employeeId);
     }
 
