@@ -143,7 +143,7 @@ public class EmployeeDatabase <T> {
         return topNEmployees;
     }
 
-    public static void printHeader() {
+    public  void printHeader() {
         System.out.printf("%-15s %-20s %-10s %-10s %-10s %-20s%n",
                 "Name", "Department", "Salary", "Performance", "Years Of Experience", "Employee ID");
         System.out.println("---------------------------------------------------------------------");
@@ -177,14 +177,14 @@ public class EmployeeDatabase <T> {
                 .forEach(System.out::println);
     }
 
-    Comparator<Employee<T>> bySalary = new Comparator<Employee<T>>() {
+    public static final Comparator<Employee<?>> bySalary = new Comparator<Employee<?>>() {
         @Override
         public int compare(Employee firstEmployee, Employee secondEmployee) {
             return secondEmployee.getSalary().compareTo(firstEmployee.getSalary());
         }
     };
 
-    Comparator<Employee<T>> byPerformance = new Comparator<Employee<T>>() {
+    public static final Comparator<Employee<?>> byPerformance = new Comparator<Employee<?>>() {
         @Override
         public int compare(Employee firstEmployee, Employee secondEmployee){
             return  secondEmployee.getPerformanceRating().compareTo(firstEmployee.getPerformanceRating());

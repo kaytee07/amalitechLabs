@@ -13,8 +13,8 @@ public class Employee <T> implements Comparable<Employee<T>>{
     private boolean isActive;
 
 
-    Employee(String name, String department, double salary,
-             double performanceRating, int yearsOfExperience){
+    public Employee(String name, String department, double salary,
+                    double performanceRating, int yearsOfExperience){
         this.employeeId = (T) UUID.randomUUID();
         this.name = name;
         this.department = department;
