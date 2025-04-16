@@ -11,4 +11,6 @@ module com.example.employeesystem {
 
     opens com.example.employeesystem to javafx.fxml;
     exports com.example.employeesystem;
+    exports com.example.employeesystem.Model;
+    opens com.example.employeesystem.Model to javafx.fxml;
 }

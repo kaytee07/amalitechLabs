@@ -1,15 +1,17 @@
 package com.example.employeesystem.Model;
 
+import java.util.Comparator;
 import java.util.UUID;
 
-public class Employee <T> implements Comparable<Employee<T>> {
+public class Employee <T> implements Comparable<Employee<T>>{
     private final T employeeId;
     private String name;
     private String department;
-    private double salary;
-    private double performanceRating;
-    private int yearsOfExperience;
+    private Double salary;
+    private Double performanceRating;
+    private Integer yearsOfExperience;
     private boolean isActive;
+
 
     Employee(String name, String department, double salary,
              double performanceRating, int yearsOfExperience){
@@ -38,13 +40,13 @@ public class Employee <T> implements Comparable<Employee<T>> {
         this.salary = salary;
     }
 
-    public double getSalary(){ return salary; }
+    public Double getSalary(){ return salary; }
 
     public void setPerformanceRating(double performanceRating){
         this.performanceRating = performanceRating;
     }
 
-    public double getPerformanceRating(){
+    public Double getPerformanceRating(){
         return performanceRating;
     }
 
@@ -61,6 +63,9 @@ public class Employee <T> implements Comparable<Employee<T>> {
     }
 
     public boolean getIsActive(){ return isActive; }
+
+    public T getEmployeeId(){ return employeeId; }
+
 
     @Override
     public int compareTo(Employee<T> otherEmployee) {
