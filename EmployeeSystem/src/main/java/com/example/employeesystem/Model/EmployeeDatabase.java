@@ -105,7 +105,7 @@ public class EmployeeDatabase <T> {
 
     public void salaryRaise(Double percentageInDecimal){
         ArrayList<Employee<T>> allEmployees = getAllEmployees();
-        allEmployees.forEach(employee -> {
+        employees.values().forEach(employee -> {
             if (employee.getPerformanceRating() >= 4.5) {
                 double newSalary = employee.getSalary() + employee.getSalary() * percentageInDecimal;
                 employee.setSalary(newSalary);
