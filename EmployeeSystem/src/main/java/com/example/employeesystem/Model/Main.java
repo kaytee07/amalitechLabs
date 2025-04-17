@@ -22,7 +22,7 @@ public class Main {
                         ", Department: " + emp.getDepartment() +
                         ", Salary: " + emp.getSalary() +
                         ", Experience: " + emp.getYearsOfExperience() +
-                        ", Staff ID: " + emp.getEmployeeId());
+                        ", Staff ID: " + emp.getEmployeeID());
             });
 
             // Raise Charlie's salary by 10%
@@ -33,7 +33,7 @@ public class Main {
                         ", Department: " + emp.getDepartment() +
                         ", Salary: " + emp.getSalary() +
                         ", Experience: " + emp.getYearsOfExperience() +
-                        ", Staff ID: " + emp.getEmployeeId());
+                        ", Staff ID: " + emp.getEmployeeID());
             });
 
             // Remove Bob
@@ -44,7 +44,7 @@ public class Main {
                         ", Department: " + emp.getDepartment() +
                         ", Salary: " + emp.getSalary() +
                         ", Experience: " + emp.getYearsOfExperience() +
-                        ", Staff ID: " + emp.getEmployeeId());
+                        ", Staff ID: " + emp.getEmployeeID());
             });
 
             db.updateEmployeeDetail(employeeID5, "department", "Finance");
@@ -58,7 +58,7 @@ public class Main {
                         ", Department: " + emp.getDepartment() +
                         ", Salary: " + emp.getSalary() +
                         ", Experience: " + emp.getYearsOfExperience() +
-                        ", Staff ID: " + emp.getEmployeeId());
+                        ", Staff ID: " + emp.getEmployeeID());
             });
 
 
@@ -68,6 +68,8 @@ public class Main {
                 System.out.println("Name: " + emp.getName() +
                         ", Salary: " + emp.getSalary());
             });
+
+            db.displayEmployeesWithStream();
             
             
 

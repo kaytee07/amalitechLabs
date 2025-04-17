@@ -7,22 +7,30 @@ import java.util.stream.Collectors;
 
 public class EmployeeDatabase <T> {
     
-    private HashMap<UUID, Employee<T>> employees = new HashMap<>();
+    private HashMap<T, Employee<T>> employees = new HashMap<>();
 
-    public UUID addEmployee(Employee<T> employee){
-        UUID id = UUID.randomUUID();
-        employees.put(id, employee);
-        return id;
+    public T addEmployee(Employee<T> employee){
+        employees.put(employee.getEmployeeID(), employee);
+        return employee.getEmployeeID();
     }
 
-    public void removeEmployee(T employeeId) throws UserNotFoundException {
-//        if (!employees.containsKey(employeeId)) {
-//            throw new UserNotFoundException("Error removing employee: Employee not found");
-//        }
+    public Employee<T> getEmployee(T employeeID) throws UserNotFoundException{
+        Employee<T> employee = employees.get(employeeID);
+        if (employee == null) throw new UserNotFoundException("User not found");
 
-        this.getAllEmployees().forEach(employee -> System.out.println(employee.getEmployeeId() == employeeId));
+        return employee;
+    }
 
-        employees.remove(employeeId);
+    public void removeEmployee(T employeeID) throws UserNotFoundException {
+        ArrayList<Employee<T>> allEmployees = getAllEmployees();
+        allEmployees.stream().forEach(employee -> {
+        });
+
+
+        Employee<T> employee = employees.get(employeeID);
+        if (employee == null) throw new UserNotFoundException("employee ID doesn't match anyone in the system");
+
+        employees.remove(employeeID);
     }
 
     public void updateEmployeeDetail(T employeeId, String field, Object newValue) throws Exception {
@@ -76,14 +84,24 @@ public class EmployeeDatabase <T> {
     }
 
 
-    public ArrayList<Employee<T>> searchByName(String filter, String query) throws Exception{
+    public ArrayList<Employee<T>> search(String query) throws UserNotFoundException {
+        String lowerQuery = query.toLowerCase();
         ArrayList<Employee<T>> allEmployees = getAllEmployees();
-        ArrayList<Employee<T>> filteredEmployees;
-        filteredEmployees = allEmployees.stream().filter(employee -> employee.getName().contains(query)).collect(Collectors.toCollection(ArrayList::new));
-        if(filteredEmployees.isEmpty()) throw new Exception("User not found");
-        return filteredEmployees;
 
+        ArrayList<Employee<T>> filteredEmployees = allEmployees.stream()
+                .filter(employee ->
+                        employee.getName().toLowerCase().contains(lowerQuery) ||
+                                employee.getDepartment().toLowerCase().contains(lowerQuery)
+                )
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        if (filteredEmployees.isEmpty()) {
+            throw new UserNotFoundException("No employee matched the search query.");
+        }
+
+        return filteredEmployees;
     }
+
 
     public ArrayList<Employee<T>> filterByDepartment(String department) throws Exception{
         ArrayList<Employee<T>> allEmployees = getAllEmployees();
@@ -149,8 +167,8 @@ public class EmployeeDatabase <T> {
     }
 
     public  void printHeader() {
-        System.out.printf("%-15s %-20s %-10s %-10s %-10s %-20s%n",
-                "Name", "Department", "Salary", "Performance", "Years Of Experience", "Employee ID");
+        System.out.printf("%-15s %-20s %-10s %-10s %-20s %-20s%n",
+                "Name", "Department", "Salary", "Performance", "Experience", "EmployeeID");
         System.out.println("---------------------------------------------------------------------");
     }
 
@@ -158,13 +176,13 @@ public class EmployeeDatabase <T> {
         ArrayList<Employee<T>> allEmployees = getAllEmployees();
         printHeader();
         for (Employee<T> employee: allEmployees){
-            System.out.printf("%-15s %-20s %-10s %-10s %-10s %-20s%n",
+            System.out.printf("%-15s %-20s %-10s %-10s %-20s %-20s%n",
                     employee.getName(),
                     employee.getDepartment(),
                     employee.getSalary(),
                     employee.getPerformanceRating(),
                     employee.getYearsOfExperience(),
-                    employee.getEmployeeId().toString());
+                    employee.getEmployeeID().toString());
         }
     }
 
@@ -178,7 +196,7 @@ public class EmployeeDatabase <T> {
                         employee.getSalary(),
                         employee.getPerformanceRating(),
                         employee.getYearsOfExperience(),
-                        employee.getEmployeeId().toString()))
+                        employee.getEmployeeID().toString()))
                 .forEach(System.out::println);
     }
 

@@ -64,7 +64,7 @@ public class Employee <T> implements Comparable<Employee<T>>{
 
     public boolean getIsActive(){ return isActive; }
 
-    public T getEmployeeId(){ return employeeId; }
+    public T getEmployeeID(){ return employeeId; }
 
 
     @Override
