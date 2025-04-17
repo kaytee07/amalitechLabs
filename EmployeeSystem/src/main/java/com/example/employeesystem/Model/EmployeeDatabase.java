@@ -23,10 +23,6 @@ public class EmployeeDatabase <T> {
 
     public void removeEmployee(T employeeID) throws UserNotFoundException {
         ArrayList<Employee<T>> allEmployees = getAllEmployees();
-        allEmployees.stream().forEach(employee -> {
-        });
-
-
         Employee<T> employee = employees.get(employeeID);
         if (employee == null) throw new UserNotFoundException("employee ID doesn't match anyone in the system");
 
@@ -80,6 +76,12 @@ public class EmployeeDatabase <T> {
 
 
     public ArrayList<Employee<T>> getAllEmployees(){
+        Iterator<Employee<T>> iterator = new ArrayList<Employee<T>>(employees.values()).iterator();
+        while (iterator.hasNext()) {
+            Employee<T> employee = iterator.next();
+            System.out.println(employee.getName());
+        }
+
         return new ArrayList<Employee<T>>(employees.values());
     }
 
@@ -124,7 +126,6 @@ public class EmployeeDatabase <T> {
     }
 
     public ArrayList<Employee<T>> filterByPerformance(boolean greaterThan, double performance) throws Exception{
-        ArrayList<Employee<T>> allEmployees = getAllEmployees();
         ArrayList<Employee<T>> filteredEmployees;
         if(greaterThan){
             filteredEmployees = getAllEmployees().stream()

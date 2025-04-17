@@ -193,6 +193,8 @@ public class HelloApplication extends Application {
                 double performance = Double.parseDouble(performanceField.getText());
                 int experience = Integer.parseInt(yearsOfExperienceField.getText());
 
+                employeeDatabase.addEmployee(new Employee<UUID>(name, department, salary, performance, experience));b
+
                 refreshEmployeeList();
 
 

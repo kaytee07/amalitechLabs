@@ -12,6 +12,17 @@ public class Employee <T> implements Comparable<Employee<T>>{
     private Integer yearsOfExperience;
     private boolean isActive;
 
+    public Employee(String name, String department, double salary,
+                    double performanceRating, int yearsOfExperience, String employeeID){
+        this.employeeId = (T) employeeID;
+        this.name = name;
+        this.department = department;
+        this.salary = salary;
+        this.performanceRating = performanceRating;
+        this.yearsOfExperience = yearsOfExperience;
+        this.isActive = true;
+    }
+
 
     public Employee(String name, String department, double salary,
                     double performanceRating, int yearsOfExperience){
