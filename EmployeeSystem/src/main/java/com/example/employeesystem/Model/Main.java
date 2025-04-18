@@ -69,7 +69,8 @@ public class Main {
                         ", Salary: " + emp.getSalary());
             });
 
-            db.displayEmployeesWithStream();
+            db.displayEmployeesWithForLoop();
+            db.printDepartmentReport();
             
             
 

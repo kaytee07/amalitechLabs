@@ -11,6 +11,7 @@ public class EmployeeDatabase <T> {
 
     public T addEmployee(Employee<T> employee){
         employees.put(employee.getEmployeeID(), employee);
+        System.out.println(employee.getEmployeeID());
         return employee.getEmployeeID();
     }
 
@@ -22,7 +23,6 @@ public class EmployeeDatabase <T> {
     }
 
     public void removeEmployee(T employeeID) throws UserNotFoundException {
-        ArrayList<Employee<T>> allEmployees = getAllEmployees();
         Employee<T> employee = employees.get(employeeID);
         if (employee == null) throw new UserNotFoundException("employee ID doesn't match anyone in the system");
 
@@ -187,18 +187,20 @@ public class EmployeeDatabase <T> {
         }
     }
 
-    public void displayEmployeesWithStream() {
-        ArrayList<Employee<T>> allEmployees = getAllEmployees();
-        printHeader();
-        allEmployees.stream()
-                .map(employee -> String.format("%-15s %-20s %-10s %-10s %-10s %-20s%n",
-                        employee.getName(),
-                        employee.getDepartment(),
-                        employee.getSalary(),
-                        employee.getPerformanceRating(),
-                        employee.getYearsOfExperience(),
-                        employee.getEmployeeID().toString()))
-                .forEach(System.out::println);
+    public void printDepartmentReport() {
+        Map<String, List<Employee<?>>> groupedByDept = getAllEmployees().stream()
+                .collect(Collectors.groupingBy(Employee::getDepartment));
+        System.out.println(String.format("%-15s %-15s %-25s %-20s", "Department", "Avg Salary", "Avg Performance Rating", "Avg Experience"));
+        System.out.println("---------------------------------------------------------------");
+        groupedByDept.forEach((dept, empList) -> {
+            double avgSalary = empList.stream()
+                    .collect(Collectors.averagingDouble(Employee::getSalary));
+            double avgPerformance = empList.stream()
+                    .collect(Collectors.averagingDouble(Employee::getPerformanceRating));
+            double avgExperience = empList.stream()
+                    .collect(Collectors.averagingInt(Employee::getYearsOfExperience));
+            System.out.printf("%-15s $%-14.2f %-25.2f %-20.2f%n", dept, avgSalary, avgPerformance, avgExperience);
+        });
     }
 
     public static final Comparator<Employee<?>> bySalary = new Comparator<Employee<?>>() {
