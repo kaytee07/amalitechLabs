@@ -20,7 +20,6 @@ import java.util.UUID;
 
 public class HelloApplication extends Application {
 
-    // Our database instance
     private EmployeeDatabase<UUID> employeeDatabase = new EmployeeDatabase<>();
     private ObservableList<Employee<UUID>> employeeList = FXCollections.observableArrayList();
 
